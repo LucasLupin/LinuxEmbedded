@@ -1,0 +1,25 @@
+# Target 1: Create a "Temp" folder and copy binaryClock.py into it
+create_folder:
+	mkdir -p Temp
+	cp BinaryClock.py Temp/
+
+# Target 2: Run the binaryClock script from the Temp folder
+run_script:
+	python3 Temp/BinaryClock.py
+
+# Target 3: Delete the "Temp" folder
+clean_folder:
+	rm -rf Temp
+
+# Target 4: Stop and remove the binaryClock service (assuming it’s registered as a service)
+stop_service:
+	sudo systemctl stop BinaryClock.service
+	sudo systemctl disable BinaryClock.service
+
+# Target 5: Recreate and restart the binaryClock service
+restart_service: stop_service
+	sudo systemctl enable BinaryClock.service
+	sudo systemctl start BinaryClock.service
+
+# A meta target that calls all the others in sequence
+all: create_folder run_script clean_folder stop_service restart_service

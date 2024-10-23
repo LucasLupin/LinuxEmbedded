@@ -1,0 +1,73 @@
+.\" Manpage for binaryClock.py
+.TH BINARYCLOCK 1 "Oktober 2024" "1.0" "Brugerhåndbog"
+.SH NAVN
+binaryClock.py \- Python-script til at vise tiden i binær form på Raspberry Pi's Sense HAT.
+Denne hat kan også vise Danmarks flag på 90% og tryk på joystick, derudover kan den vise temperatur på 180% ved tryk på joystick og til sidst kan denne vise Fugtighed på 270% grader ved tryk på joystick.
+
+.SH SYNOPSIS
+.B binaryClock.py
+[\-r vinkel]
+
+.SH BESKRIVELSE
+binaryClock.py er et Python-script designet til at vise tiden i binær form ved hjælp af LED'erne på en Sense HAT. Scriptet er blevet gjort eksekverbart, kan håndtere "kill" signaler og er registreret som en systemtjeneste. Det understøtter rotation af visningen og er struktureret med en Makefile for at lette administration og kørsel.
+
+.SH MULIGHEDER
+.TP
+.B \-r vinkel
+Rotér visningen af uret. Gyldige vinkler er 0, 90, 180, eller 270 grader. Ugyldige indtastninger vil resultere i en fejlmeddelelse: 
+.RS
+“kan ikke roter med det angivet input”.
+.RE
+
+.SH IMPLEMENTERINGSDETALJER
+.PP
+Følgende funktioner og strukturer er blevet implementeret i scriptet:
+
+.TP
+1. **Gøre scriptet eksekverbart**: 
+   Scriptet er blevet gjort eksekverbart for at lette brugen.
+
+.TP
+2. **Håndtering af "kill" signaler**: 
+   Scriptet fanger og håndterer "kill" signaler, hvilket sikrer en ordentlig nedlukning af programmet.
+
+.TP
+3. **Registrering som en systemtjeneste**: 
+   binaryClock.py er blevet registreret som en systemtjeneste, hvilket muliggør automatisk opstart ved boot.
+
+.TP
+4. **Rotation af visningen**: 
+   Scriptet kan tage en parameter \-r for at rotere visningen. Ugyldige input håndteres med en passende fejlmeddelelse.
+
+.TP
+5. **Makefile**: 
+   En Makefile er oprettet med følgende targets:
+.TP
+.B all:
+   Kaldes for at udføre alle andre targets.
+.TP
+.B create_temp:
+   Opretter en mappe kaldet "Temp" og kopierer binaryClock.py til den.
+.TP
+.B run_script:
+   Kører binaryClock.py scriptet.
+.TP
+.B clean_temp:
+   Sletter "Temp" mappen.
+.TP
+.B delete_service:
+   Sletter binaryClock tjenesten.
+.TP
+.B restore_service:
+   Genopretter binaryClock tjenesten.
+   Alle targets kan også kaldes individuelt.
+
+.SH EKSEMPLER
+For at køre scriptet med en 90-graders rotation, skal du bruge:
+.B binaryClock.py -r 90
+
+For at køre scriptet uden rotation, skal du blot skrive:
+.B binaryClock.py
+
+.SH FORFATTER
+Programmet er udviklet af Dennis og Lucas.
